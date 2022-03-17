@@ -1,0 +1,151 @@
+{% extends 'shopbase.html' %}
+
+{% block content %}
+{% load static %}
+
+<body
+    style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="card"
+                style="background-color:rgba(238, 217, 217, 0.6);width:800px;margin-top: 50px; margin-right: 50px;">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">Shop Order Queue</h3>
+
+                </div>
+                <div class="card-body">
+                    {% if queueExist  %}
+                    <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                        <table class="table table-condensed table-hover">
+                            <thead style="background-color: dodgerblue;">
+                                <tr>
+                                    <th scope="col">Token</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Delivery Expected</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for option in orderQueue %}
+                                <tr>
+                                    <th scope="row" style="background-color: dodgerblue;">QL00{{option.id}}</th>
+                                    <td>{{option.parentOrder.customer.name}} </td>
+                                    <td>{{option.createdAt}} </td>
+                                    <td>{{option.status}} </td>
+                                    <td>{{option.estimatedTime}} </td>
+                                    <th scope="col"><a class="btn btn-primary" href="{% url 'bag' option.id %}">View Items</a></th>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    {% else %}
+                    <div style="background-color:rgba(250, 111, 111, 0.6); border-radius: 10px; padding: 10px;">
+                    <h6 class="text-center">Oops no Orders in open queue !</h6>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card"
+            style="background-color:rgba(238, 217, 217, 0.6);width:800px;margin-top: 50px; margin-right: 50px;">
+            <div class="card-header">
+                <h3 class="text-center" style="color: dodgerblue;">Ready Orders</h3>
+
+            </div>
+            <div class="card-body">
+                {% if ReadyExist  %}
+                <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                    <table class="table table-condensed table-hover">
+                        <thead style="background-color: rgb(16, 13, 197);color: white;">
+                            <tr>
+                                <th scope="col">Token</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Delivery Expected</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for option in readyQueue %}
+                            <tr>
+                                <th scope="row" style="background-color: rgb(16, 13, 197); color: white;">QL00{{option.id}}</th>
+                                <td>{{option.parentOrder.customer.name}} </td>
+                                <td>{{option.createdAt}} </td>
+                                <td>{{option.status}} </td>
+                                <td>{{option.estimatedTime}} </td>
+                                <th scope="col"><a class="btn btn-success" href="{% url 'checkout' option.id %}">Update</a></th>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+                {% else %}
+                <div style="background-color:rgba(250, 111, 111, 0.6); border-radius: 10px; padding: 10px;">
+                <h6 class="text-center">Nothing in Ready Queue </h6>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card"
+            style="background-color:rgba(238, 217, 217, 0.6);width:800px;margin-top: 50px; margin-right: 50px;">
+            <div class="card-header">
+                <h3 class="text-center" style="color: dodgerblue;">Todays Orders</h3>
+
+            </div>
+            <div class="card-body">
+                {% if complatedExist  %}
+                <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                    <table class="table table-condensed table-hover">
+                        <thead style="background-color: rgb(30, 207, 74);">
+                            <tr>
+                                <th scope="col">Token</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Delivery Expected</th>
+                                <th scope="col">Completed At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for option in completedQueue %}
+                            <tr>
+                                <th scope="row" style="background-color: rgb(30, 207, 74);">QL00{{option.id}}</th>
+                                <td>{{option.parentOrder.customer.name}} </td>
+                                <td>{{option.createdAt}} </td>
+                                <td>{{option.status}} </td>
+                                <td>{{option.estimatedTime}} </td>
+                                <td>{{option.completedAt}} </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+                {% else %}
+                <div style="background-color:rgba(250, 111, 111, 0.6); border-radius: 10px; padding: 10px;">
+                <h6 class="text-center">Nothing in Order Queue </h6>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

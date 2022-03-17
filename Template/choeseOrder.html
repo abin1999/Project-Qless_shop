@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<body
+    style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+
+        <div class="col-lg-6" style="margin: auto;">
+            <div class="card"
+                style="background-color:rgba(238, 217, 217, 0.6);max-width:700px;margin:auto;margin-top: 50px; margin-right: 50px;">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">Fastest Plan</h3>
+
+                </div>
+                {% if empty %}
+                <h5 class="text-center" style="color: green;">Order Placed Thank you!</h5>
+                {% else %}
+                <div class="card-body">
+
+                    {% for option in option %}
+                    <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                        <div class="text-center"
+                            style="padding-right: 10px;padding-left: 10px; border:5px solid rgba(238, 217, 217, 0.6)">
+                            <div class="row"
+                                style="background-color: #1e90ff; padding: 10px; margin-top: 0px; border-radius: 5px;">
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Shop: {{option.shopname}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Token No:QL00{{option.id}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Estimate time : {{option.estimatedTime}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Total Amount : {{option.total}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                {% if item.id is option.id %}
+                                <tr>
+                                    <th scope="row">-></th>
+                                    <td>{{item.name}} </td>
+                                    <td> {{item.brand}}</td>
+                                    <td>{{item.qty}}</td>
+                                    <td>{{item.price}}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    {% endfor %}
+                    <!-- <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px;">
+                        <div class="text-center" style="padding: 10px; border:5px solid rgba(238, 217, 217, 0.6)">
+                            Shop Name: xxxx Token No:xxxx <br>
+                            Estimate time : xxxxx    Total Amount :  xxxxxx
+                        </div>
+                        <ul>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px;">
+                        <div class="text-center" style="padding: 10px; border:5px solid rgba(238, 217, 217, 0.6)">
+                            Shop Name: xxxx Token No:xxxx <br>
+                            Estimate time : xxxxx    Total Amount :  xxxxxx
+                        </div>
+                        <ul>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                            <li style="padding-left: 10px; padding-bottom: 5px;">
+                                item     -  Brand  - Qty  - Price
+                            </li>
+                        </ul>
+
+                    </div> -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card-footer">
+                            <button type="submit" name='confirmOrder' class="btn btn-success mb-2">Confirm
+                                Order</button>
+                            <br>
+                            <button type="submit" name='cancelOrder' class="btn btn-danger">Cancel Order</button>
+                        </div>
+                    </form>
+                    <div class="card-footer" style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px;">
+
+                        Total Amount : {{total_amd}}<br>
+                        Expected time of completion of order : {{time}}
+                    </div>
+                </div>
+               
+
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+
+            <div class="col-lg-12" style="margin: auto;">
+                <div class="card"
+                    style="background-color:rgba(238, 217, 217, 0.6);max-width:700px;margin:auto;margin-top: 50px; margin-right: 50px;">
+                    <div class="card-header">
+                        <h3 class="text-center" style="color: dodgerblue;">Mannual Plan</h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                            <div class="text-center"
+                                style="padding-right: 10px;padding-left: 10px; border:5px solid rgba(238, 217, 217, 0.6)">
+                                <div class="row"
+                                    style="background-color: #1e90ff; padding: 10px; margin-top: 0px; border-radius: 5px;">
+                                    <div class="col-sm-6">
+                                        <h6 class="text-left">Order Number : 001</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h6 class="text-left">List Number : 002</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h6 class="text-left">Locaition : Location</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <form method="POST">
+                                {% csrf_token %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Qty</th>
+                                        <th scope="col">Avaialable shops</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for manual in manualPlans %}
+                                    <tr>
+                                        <th scope="row">-></th>
+                                        <td>{{manual.item}} </td>
+                                        <td>{{manual.qty}} </td>
+                                        
+                                        <td>
+                                            <Select name="{{manual.slno}}">
+                                                {% for shop in manual.shop %}
+                                                <option value="{{shop.id}}">Shop: {{shop.name}} | Price : {{shop.price}}</option>
+                                                {% endfor %}
+                                            </Select>
+                                        </td>
+                                        
+                                        <td><a class="btn btn-success">Add</a></td>
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                        
+
+                            <div class="card-footer">
+                                <button type="submit" name='validateOrder' class="btn btn-success mb-2">Validate and Place Order</button>
+                                <br>
+                            </div>
+                        </form>
+                        <div class="card-footer"
+                            style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px;">
+
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+</body>
+{% endblock %}

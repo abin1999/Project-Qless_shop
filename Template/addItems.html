@@ -1,0 +1,62 @@
+{% extends 'shopbase.html' %}
+
+{% block content %}
+{% load static %}
+
+<body style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="container" style="margin-top: 50px;">
+        <form action="" style="max-width:500px;margin:auto" method="POST"> 
+            {% csrf_token %}
+            <div class="card" style="background-color:rgba(238, 217, 217, 0.6);">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">! Add Items !</h3>
+                    {% if error %}
+                    <div class="text-danger">{{error}}</div>
+                    {% endif %}
+                    {% if success %}
+                    <div class="text-success">{{success}}</div>
+                    {% endif %}
+                </div>
+                <div class="card-body" >
+                    <div id="shop">
+                        <div class="input-container">
+                            <i class="fa fa-shopping-basket icon"></i>
+                            <input class="input-field" type="text" placeholder="Item Name" name="name">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-phone icon"></i>
+                            <input class="input-field" type="text" placeholder="Brand" name="brand">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-balance-scale icon"></i>
+                            <select name="itemunit" style="height: 45px; background-color: white; color: black;">
+                                <option value="KG">KG</option>
+                                <option value="Ltr">Ltr</option>
+                                <option value="Piece">Count</option>
+                             </select>
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-clock-o icon"></i>
+                            <input class="input-field" type="text" placeholder="Avarage Packing time" name="packingTime">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-shopping-basket icon"></i>
+                            <select name="packingType" style="height: 45px; background-color: white; color: black;">
+                                <option value="Cover">Cover Type</option>
+                                <option value="Packed">Packed Type</option>
+                                <option value="Bottle">Bottle Type</option>
+                                <option value="Other">Other type</option>
+                             </select>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <h6 style="padding: 20px;" class="text-center"><a href="{% url 'addStock' %}">Back to stock Page</a></h6>
+                </div>
+        </form>
+    </div>
+</body>
+
+{% endblock %}

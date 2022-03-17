@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'Style/style.css' %}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+</head>
+
+<body style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="container" style="margin-top: 50px;">
+        <form action="" style="max-width:500px;margin:auto" method="POST"> 
+            {% csrf_token %}
+            <div class="card" style="background-color:rgba(238, 217, 217, 0.6);">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">!  Welcome  !</h3>
+                    {% if error %}
+                    <div class="text-danger">{{error}} <a href="{% url 'login' %}">Login</a></div>
+                    {% endif %}
+                </div>
+                <div class="card-body" >
+                    <div id="shop">
+                        <div class="input-container">
+                            <i class="fa fa-shopping-basket icon"></i>
+                            <input class="input-field" type="text" placeholder="Shop Name" name="shopname">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-phone icon"></i>
+                            <input class="input-field" type="text" placeholder="Shop Phone" name="shopPNo">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-registered icon"></i>
+                            <input class="input-field" type="text" placeholder="Shop Number" name="shopNo">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-shopping-cart icon"></i>
+                            <select name="shoptype" style="height: 45px; background-color: white; color: black;">
+                                {% for shopcategory in shopcategories %}
+                                   <option value='{{shopcategory.id}}'>{{shopcategory.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <!-- <input class="input-field" type="text" placeholder="Shop Type" name="shoptype"> -->
+                        </div>
+                        <h6 class="text-center" style="padding: 20px;">Shoptype not in List ? <a href="{% url 'addcategory' %}">Add your Type here</a> </h6>
+                        <div class="input-container">
+                            <i class="fa fa-map-marker icon"></i>
+                            <select name="location" style="height: 45px; background-color: white; color: black;">
+                                {% for location in locations %}
+                                   <option value='{{location.id}}'>{{location.name}} - {{location.district}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-clock-o icon"></i>
+                            <input class="input-field" type="time"  name="openTimefrom">
+                            <span style="padding: 0px 10px;">To </span>
+                            <i class="fa fa-clock-o icon"></i>
+                            <input class="input-field" type="time"  name="closetime">
+                        </div>
+                        <div class="input-container">
+                            <i class="fa fa-calendar icon"></i>
+                            <div class="weekDays-selector" style="padding: 10px;">
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-mon" class="weekday" />
+                                <label for="weekday-mon">Mo</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-tue" class="weekday" />
+                                <label for="weekday-tue">Tu</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-wed" class="weekday" />
+                                <label for="weekday-wed">We</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-thu" class="weekday" />
+                                <label for="weekday-thu">Th</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-fri" class="weekday" />
+                                <label for="weekday-fri">Fr</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-sat" class="weekday" />
+                                <label for="weekday-sat">Sa</label>
+                                <input onchange="valueChanged()" type="checkbox" id="weekday-sun" class="weekday" />
+                                <label for="weekday-sun">Su</label>
+                            </div>
+                        </div>
+                        <input type="text" id="allweekdays" name="allweekdays" hidden>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+        </form>
+    </div>
+</body>
+<script>
+    function valueChanged() {
+        $('#allweekdays').val('')
+        if ($('#weekday-mon').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "mon_")
+        }
+        if ($('#weekday-tue').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "tue_")
+        }
+        if ($('#weekday-wed').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "wed_")
+        }
+        if ($('#weekday-thu').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "thu_")
+        }
+        if ($('#weekday-fri').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "fri_")
+        }
+        if ($('#weekday-sat').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "sat_")
+        }
+        if ($('#weekday-sun').is(":checked")) {
+            $("#allweekdays").val($("#allweekdays").val() + "sun_")
+        }
+
+    }
+</script>
+
+</html>

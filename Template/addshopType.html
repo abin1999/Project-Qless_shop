@@ -1,0 +1,36 @@
+{% extends 'shopbase.html' %}
+
+{% block content %}
+{% load static %}
+
+<body style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="container" style="margin-top: 50px;">
+        <form action="" style="max-width:500px;margin:auto" method="POST"> 
+            {% csrf_token %}
+            <div class="card" style="background-color:rgba(238, 217, 217, 0.6);">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">! Add Shop Type !</h3>
+                    {% if error %}
+                    <div class="text-danger">{{error}}</div>
+                    {% endif %}
+                    {% if success %}
+                    <div class="text-success">{{success}}</div>
+                    {% endif %}
+                </div>
+                <div class="card-body" >
+                    <div id="shop">
+                        <div class="input-container">
+                            <i class="fa fa-shopping-basket icon"></i>
+                            <input class="input-field" type="text" placeholder="Shop Type" name="shoptype">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <input type="button" class="btn btn-success mt-4" value="Go Back" onClick="javascript:history.go(-2);">
+                   
+                </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'shopbase.html' %}
+
+{% block content %}
+{% load static %}
+<body
+    style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+
+        <div class="col-lg-6" style="margin: auto;">
+            <div class="card"
+                style="background-color:rgba(238, 217, 217, 0.6);max-width:700px;margin:auto;margin-top: 50px; margin-right: 50px;">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">Order Details</h3>
+
+                </div>
+                <div class="card-body">
+
+                    
+                    <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                        <div class="text-center"
+                            style="padding-right: 10px;padding-left: 10px; border:5px solid rgba(238, 217, 217, 0.6)">
+                            <div class="row" style="background-color: #1e90ff; padding: 10px; margin-top: 0px; border-radius: 5px;">
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Customer: {{bag.parentOrder.customer.name}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Token No:QL00{{bag.id}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Delivery time : {{bag.estimatedTime}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-left">Total Amount : {{total_amd}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in bagitems %}
+                                <tr>
+                                    <th scope="row">-></th>
+                                    <td>{{item.name}} </td>
+                                    <td> {{item.brand}}</td>
+                                    <td>{{item.qty}}</td>
+                                    <td>{{item.price}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    
+                    <div class="card-footer" style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px;">
+                        <i class="fa fa-phone" aria-hidden="true"></i><h6 class="text-left">{{bag.parentOrder.customer.phoneNumber}}</h6>  <h6 class="text-right">Total Amount:{{total_amd}}</h6> 
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                    <div class="card-footer">
+                        {% if started %}
+                        <button type="submit" name='complete' class="btn btn-success">Complete Order</button>
+                        {% else %}
+                        <button type="submit" name='start' class="btn btn-success">Start Packing</button>
+                        {% endif %}
+                        <div><h5 class="text-danger">{{error}}</h5></div>
+                        <button type="submit" name='cancelOrder' class="btn btn-danger">Reject Order</button>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+</body>
+
+{% endblock %}

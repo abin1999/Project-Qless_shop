@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<body style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+        <div class="col-lg-8" style="margin: auto;">
+            <div class="card"
+                style="background-color:rgba(238, 217, 217, 0.6);">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">List</h3>
+
+                </div>
+                <div class="card-body">
+                    <div id="shop">
+                        <table class="table table-striped">
+                            <thead style="background-color: #007bff; color: white;">
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color: white;">
+                                {% for listItem in listItems %}
+                                <tr>
+                                    <td>{{listItem.item.name}} - {{listItem.item.brand}}</td>
+                                    <td>{{listItem.quantity}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="card-footer">
+                            <div class="text-danger">{{error}}</div>
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <table class="table table-striped">
+                                    <thead style="background-color: #007bff; color: white;">
+                                        <tr>
+                                            <th>
+                                                <select name="addingItem">
+                                                    {% for item in availableItems %}
+                                                    <option value="{{item.id}}">{{item.name}} - {{item.brand}} </option>
+                                                    {% endfor %}
+
+                                                </select>
+                                            </th>
+                                            <th><input type="number" name="qty" placeholder="Quantity" value="1"></th>
+                                            <th>
+                                                <button type="submit" name='addItem'
+                                                    class="btn btn-success">Add</button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <button type="submit" name='placeOrder' class="btn btn-success">Place Order</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</body>
+{% endblock %}

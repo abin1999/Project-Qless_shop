@@ -1,0 +1,53 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+{% load static %}
+
+<body
+    style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="card"
+                style="background-color:rgba(238, 217, 217, 0.6);width:800px;margin-top: 50px; margin-right: 50px;">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">Pending Verification</h3>
+
+                </div>
+                <div class="card-body">
+                    <div style="background-color:rgba(255, 248, 248, 0.6); border-radius: 10px; padding: 10px;">
+                        <table class="table table-condensed table-hover">
+                            <thead style="background-color: dodgerblue;">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Shop Name</th>
+                                    <th scope="col">Shop Number</th>
+                                    <th scope="col">Shop Phone</th>
+                                    <th scope="col">Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for shops in pendingShops %}
+                                <tr>
+                                    <th scope="row" style="background-color: dodgerblue;">></th>
+                                    <td>{{shops.shopName}} </td>
+                                    <td>{{shops.shopRegNumber}} </td>
+                                    <td>{{shops.shopNumber}} </td>
+                                    <td><a class="btn btn-primary" href="{% url 'approveShop' shops.id %}">Verify</a></td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

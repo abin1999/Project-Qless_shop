@@ -1,0 +1,101 @@
+{% extends 'shopbase.html' %}
+
+{% block content %}
+{% load static %}
+
+<body style="background-image: url('{% static './Images/Background1.jpg' %}'); backgound-repeat:no-repeat;background-size:cover;">
+    <div class="row">
+        <div class="col-lg-6" style="margin-top: 50px;">
+            <form action="" style="max-width:500px;margin:auto" method="POST">
+                {% csrf_token %}
+                <div class="card" style="background-color:rgba(238, 217, 217, 0.6);">
+                    <div class="card-header">
+                        <h3 class="text-center" style="color: dodgerblue;">Update Shop Stock</h3>
+                        {% if error %}
+                        <div class="text-danger">{{error}}</div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <div id="shop">
+                            <div class="input-container">
+                                
+                                <i class="fa fa-file-text-o icon"></i>
+                                <span style="background-color: white; padding: 6px;" class="text-center">Entry Type :</span>
+                                <select name="etryType" style="height: 45px; background-color: white; color: black;">
+                                    <option value="AddStock">Add / Update Stock</option>
+                                    <option value="Updateloss">Add Loss</option>
+                                </select>
+                            </div>
+                            <div class="input-container">
+                                <i class="fa fa-shopping-cart icon"></i>
+                                <select name="item" style="height: 45px; background-color: white; color: black;">
+                                   {% for item in items %}
+                                   <option value='{{item.id}}'>{{item.name}} - {{item.brand}} : in {{item.measure}} </option>
+                                   {% endfor %}
+                                </select>
+                            </div>
+                            <div class="input-container">
+                                <i class="fa fa-balance-scale icon"></i>
+                                <input class="input-field" type="text" placeholder="Quantity" name="quantity">
+                            </div>
+                            <div class="input-container">
+                                <i class="icon"><span style="font-size: 10px;">Exp Date</span> </i>
+                                <input class="input-field" type="date" placeholder="Expire Date" name="productExpire">
+                            </div>
+
+                            <div class="input-container">
+                                <i class="fa fa-inr icon"></i>
+                                <input class="input-field" type="number" placeholder="Buying Price"
+                                    name="wholesalePrice">
+                            </div>
+
+                            <div class="input-container">
+                                <i class="fa fa-inr icon"></i>
+                                <input class="input-field" type="number" placeholder="Selling Price" name="retailPrice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                    <hr>
+                    <h6 class="text-center" style="padding: 20px;">Item not in List ? <a href="{% url 'additems' %}">Add your Item here</a> </h6>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <div class="card" style="background-color:rgba(238, 217, 217, 0.6);max-width:700px;margin:auto;margin-top: 50px; margin-right: 50px;">
+                <div class="card-header">
+                    <h3 class="text-center" style="color: dodgerblue;">Shop Stocks</h3>
+                    
+                </div>
+                <div class="card-body">
+                    <div id="shop">
+                        <table class="table table-striped">
+                            <thead style="background-color: #007bff; color: white;">
+                              <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Expire Date</th>
+                                <th>Last Updated</th>
+                              </tr>
+                            </thead>
+                            <tbody style="background-color: white;"> 
+                                {% for shopStock in shopStocks %}
+                                <tr>
+                                    <td>{{shopStock.item.name}} - {{shopStock.item.brand}}</td>
+                                    <td>{{shopStock.quantity}}</td>
+                                    <td>{{shopStock.productExpire}}</td>
+                                    <td>{{shopStock.lastUpdated}}</td>
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Refresh</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
